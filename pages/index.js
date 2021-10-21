@@ -7,7 +7,7 @@ const CONTRACT_ADDRESS = "0x6d7b09B34b07b349E7E4D1A488E804Fd08b19B61";
 
 export default function Home() {
   // Constants
-  const OPENSEA_LINK = `https://testnets.opensea.io/collection/squarenft-4ta5vtmkmr`;
+  const OPENSEA_LINK = `https://testnets.opensea.io/collection/squarenft-hvohva3u4q`;
   const TOTAL_MINT_COUNT = 50;
 
   /*
