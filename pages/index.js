@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import myEpicNft from '../utils/MyEpicNFT.json';
 
-const CONTRACT_ADDRESS = "0x924E4d37d0E64881F71b63e36D78476eC794C62A";
+const CONTRACT_ADDRESS = "0x6d7b09B34b07b349E7E4D1A488E804Fd08b19B61";
 
 export default function Home() {
   // Constants
@@ -190,29 +190,23 @@ export default function Home() {
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
                 )}
-                {(!isMining && success) && (
-                  <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.75 12.8665L8.33995 16.4138C9.15171 17.5256 10.8179 17.504 11.6006 16.3715L18.25 6.75"></path>
-                  </svg>
-                )}
                 {(!isMining && !success) && (
                   <span className="ml-1">Mint NFT</span>
                 )}
                 {(isMining && !success) && (
                   <span className="ml-1">Minting...</span>
                 )}
-                {(!isMining && success) && (
-                  <span className="ml-1">Done. LFG!</span>
-                )}
               </button>
             )}
-            <a href="https://testnets.opensea.io/collection/squarenft-4ta5vtmkmr" target="_blank" className="mt-8 w-full sm:w-auto flex-none bg-transparent border-pink-500 hover:text-pink-600 text-pink-500 text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-600 focus:outline-none transition-colors duration-200 inline-flex items-center justify-center">
-              <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.75 16L7.49619 12.5067C8.2749 11.5161 9.76453 11.4837 10.5856 12.4395L13 15.25M10.915 12.823C11.9522 11.5037 13.3973 9.63455 13.4914 9.51294C13.4947 9.50859 13.4979 9.50448 13.5013 9.50017C14.2815 8.51598 15.7663 8.48581 16.5856 9.43947L19 12.25M6.75 19.25H17.25C18.3546 19.25 19.25 18.3546 19.25 17.25V6.75C19.25 5.64543 18.3546 4.75 17.25 4.75H6.75C5.64543 4.75 4.75 5.64543 4.75 6.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25Z"></path>
-              </svg>
+            {(!isMining && success) && (
+              <a href="https://testnets.opensea.io/collection/squarenft-4ta5vtmkmr" target="_blank" className="mt-8 w-full sm:w-auto flex-none bg-transparent border-pink-500 hover:text-pink-600 text-pink-500 text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-600 focus:outline-none transition-colors duration-200 inline-flex items-center justify-center">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.75 16L7.49619 12.5067C8.2749 11.5161 9.76453 11.4837 10.5856 12.4395L13 15.25M10.915 12.823C11.9522 11.5037 13.3973 9.63455 13.4914 9.51294C13.4947 9.50859 13.4979 9.50448 13.5013 9.50017C14.2815 8.51598 15.7663 8.48581 16.5856 9.43947L19 12.25M6.75 19.25H17.25C18.3546 19.25 19.25 18.3546 19.25 17.25V6.75C19.25 5.64543 18.3546 4.75 17.25 4.75H6.75C5.64543 4.75 4.75 5.64543 4.75 6.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25Z"></path>
+                </svg>
 
-              <span className="ml-1">View collection on OpenSea</span>
-            </a>
+                <span className="ml-1">View collection on OpenSea</span>
+              </a>
+            )}
           </div>
         </header>
       </main>
