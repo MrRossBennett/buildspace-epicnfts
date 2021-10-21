@@ -14,6 +14,8 @@ export default function Home() {
    * Just a state variable we use to store our user's public wallet. Don't forget to import useState.
    */
   const [currentAccount, setCurrentAccount] = useState("");
+  const [isMining, setIsMining] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   /*
   * Gotta make sure this is async.
@@ -132,8 +134,11 @@ export default function Home() {
         let nftTxn = await connectedContract.makeAnEpicNFT();
 
         console.log("🔨 Mining...please wait.")
+        setIsMining(true);
         await nftTxn.wait();
 
+        setIsMining(false);
+        setSuccess(true);
         console.log(`🚀 Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
 
       } else {
@@ -159,24 +164,56 @@ export default function Home() {
 
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <img src="header-paint.svg" className="w-full h-64 rotate-180 transform" />
       <main className="w-full max-w-screen-xl mx-auto text-white flex flex-col justify-center py-24 px-6 font-body relative">
         <header className="text-center mb-20 flex flex-col">
           <h1 className="text-4xl font-display mb-6">Epic Mints</h1>
           <p className="text-xl tracking-wide mb-8">Get ready!</p>
 
-          {currentAccount === "" ? (
-            <button onClick={connectWallet} className="w-full sm:w-auto flex-none bg-pink-500 hover:bg-pink-600 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-600 focus:outline-none transition-colors duration-200 inline-flex items-center justify-center">
-              Connect to Wallet
-            </button>
-          ) : (
-            <button onClick={askContractToMintNft} className="w-full sm:w-auto flex-none bg-pink-500 hover:bg-pink-600 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-600 focus:outline-none transition-colors duration-200 inline-flex items-center justify-center">
-              Mint NFT
-            </button>
-          )}
-          <a href="https://testnets.opensea.io/collection/squarenft-4ta5vtmkmr" className="mt-8 w-full sm:w-auto flex-none bg-pink-500 hover:bg-pink-600 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-600 focus:outline-none transition-colors duration-200 inline-flex items-center justify-center">
-            View collection on OpenSea
-          </a>
+          <div className="w-full max-w-sm mx-auto">
+
+            {currentAccount === "" ? (
+              <button onClick={connectWallet} className="w-full sm:w-auto flex-none bg-pink-500 hover:bg-pink-600 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-600 focus:outline-none transition-colors duration-200 inline-flex items-center justify-center">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M18.2813 12.0313L11.9687 5.7187C11.4896 5.23964 10.6829 5.36557 10.3726 5.96785L6.75 13L11 17.25L18.0321 13.6274C18.6344 13.3171 18.7604 12.5104 18.2813 12.0313Z"></path>
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.75 19.25L8.5 15.5"></path>
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13.75 7.25L16.25 4.75"></path>
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16.75 10.25L19.25 7.75"></path>
+                </svg>
+                <span className="ml-1">Connect to Wallet</span>
+              </button>
+            ) : (
+              <button onClick={askContractToMintNft} className="w-full sm:w-auto flex-none bg-pink-500 hover:bg-pink-600 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-600 focus:outline-none transition-colors duration-200 inline-flex items-center justify-center">
+                {isMining && (
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                )}
+                {(!isMining && success) && (
+                  <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.75 12.8665L8.33995 16.4138C9.15171 17.5256 10.8179 17.504 11.6006 16.3715L18.25 6.75"></path>
+                  </svg>
+                )}
+                {(!isMining && !success) && (
+                  <span className="ml-1">Mint NFT</span>
+                )}
+                {(isMining && !success) && (
+                  <span className="ml-1">Minting...</span>
+                )}
+                {(!isMining && success) && (
+                  <span className="ml-1">Done. LFG!</span>
+                )}
+              </button>
+            )}
+            <a href="https://testnets.opensea.io/collection/squarenft-4ta5vtmkmr" target="_blank" className="mt-8 w-full sm:w-auto flex-none bg-transparent border-pink-500 hover:text-pink-600 text-pink-500 text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-pink-600 focus:outline-none transition-colors duration-200 inline-flex items-center justify-center">
+              <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.75 16L7.49619 12.5067C8.2749 11.5161 9.76453 11.4837 10.5856 12.4395L13 15.25M10.915 12.823C11.9522 11.5037 13.3973 9.63455 13.4914 9.51294C13.4947 9.50859 13.4979 9.50448 13.5013 9.50017C14.2815 8.51598 15.7663 8.48581 16.5856 9.43947L19 12.25M6.75 19.25H17.25C18.3546 19.25 19.25 18.3546 19.25 17.25V6.75C19.25 5.64543 18.3546 4.75 17.25 4.75H6.75C5.64543 4.75 4.75 5.64543 4.75 6.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25Z"></path>
+              </svg>
+
+              <span className="ml-1">View collection on OpenSea</span>
+            </a>
+          </div>
         </header>
       </main>
     </div>
